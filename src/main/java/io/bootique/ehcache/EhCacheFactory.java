@@ -9,15 +9,21 @@ import javax.cache.Caching;
 import javax.cache.spi.CachingProvider;
 import java.net.URI;
 import java.net.URISyntaxException;
+import java.util.Collections;
 import java.util.List;
+import java.util.Objects;
 import java.util.Optional;
 
 public class EhCacheFactory {
 
     private List<ResourceFactory> configs;
 
+    public EhCacheFactory() {
+        this.configs = Collections.emptyList();
+    }
+
     public void setConfigs(List<ResourceFactory> configs) {
-        this.configs = configs;
+        this.configs = Objects.requireNonNull(configs);
     }
 
     public CacheManager createManager(ShutdownManager shutdownManager) {
