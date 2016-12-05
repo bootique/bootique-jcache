@@ -4,4 +4,4 @@
 # bootique-ehcache
 
 Integration of Ehcache caching provider with Bootique. Exposes EhCache via standard JCache API. 
-Provides injectable Cache
+Provides injectable CacheManager. 
