@@ -2,104 +2,114 @@ package io.bootique.ehcache;
 
 import io.bootique.test.BQTestRuntime;
 import io.bootique.test.junit.BQTestFactory;
-import org.junit.Assert;
-import org.junit.BeforeClass;
-import org.junit.ClassRule;
+import org.junit.Rule;
 import org.junit.Test;
-import org.mockito.Mockito;
-import org.mockito.invocation.InvocationOnMock;
-import org.mockito.stubbing.Answer;
 
 import javax.cache.Cache;
 import javax.cache.CacheManager;
-import javax.cache.processor.EntryProcessor;
-import javax.cache.processor.MutableEntry;
-import java.util.concurrent.atomic.AtomicInteger;
+import javax.cache.configuration.Configuration;
+import javax.cache.configuration.Factory;
+import javax.cache.configuration.MutableConfiguration;
+import javax.cache.expiry.CreatedExpiryPolicy;
+import javax.cache.expiry.Duration;
+import javax.cache.expiry.ExpiryPolicy;
+import java.util.HashSet;
+import java.util.Objects;
+import java.util.Set;
+import java.util.concurrent.TimeUnit;
 
+import static java.util.Arrays.asList;
 import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertNotNull;
 import static org.junit.Assert.assertNull;
-import static org.mockito.Matchers.any;
-import static org.mockito.Mockito.times;
-import static org.mockito.Mockito.verify;
-import static org.mockito.Mockito.when;
+import static org.junit.Assert.assertTrue;
 
 public class EhCacheModuleIT {
 
-    @ClassRule
-    public static BQTestFactory TEST_FACTORY = new BQTestFactory();
+    @Rule
+    public BQTestFactory testFactory = new BQTestFactory();
 
-    private static CacheManager CM;
+    @Test
+    public void testNoConfig() throws InterruptedException {
 
-    @BeforeClass
-    public static void initCaches() {
-
-        BQTestRuntime runtime = TEST_FACTORY.app("-c", "classpath:ehcache1.yml")
+        BQTestRuntime runtime = testFactory.app()
                 .autoLoadModules()
                 .createRuntime();
 
-        CM = runtime.getRuntime().getInstance(CacheManager.class);
+        CacheManager cm = runtime.getRuntime().getInstance(CacheManager.class);
+
+        assertNotNull(cm);
+
+        Set<String> names = new HashSet<>();
+        cm.getCacheNames().forEach(names::add);
+        assertTrue(names.isEmpty());
     }
 
     @Test
-    public void testCache() {
+    public void testContributedConfig() throws InterruptedException {
 
-        Cache<Integer, String> cache = CM.getCache("2entry", Integer.class, String.class);
-        Assert.assertNotNull(cache);
+        Factory<ExpiryPolicy> _100ms = CreatedExpiryPolicy.factoryOf(new Duration(TimeUnit.MILLISECONDS, 100));
+        Configuration<Long, Long> boundConfig = new MutableConfiguration<Long, Long>()
+                .setTypes(Long.class, Long.class)
+                .setExpiryPolicyFactory(_100ms);
 
-        cache.put(3, "three");
-        assertEquals("three", cache.get(3));
+        BQTestRuntime runtime = testFactory.app()
+                .autoLoadModules()
+                .module(b -> EhCacheModule.contributeConfiguration(b).addBinding("fromconfig").toInstance(boundConfig))
+                .createRuntime();
 
-        cache.put(4, "four");
-        assertEquals("four", cache.get(4));
+        CacheManager cm = runtime.getRuntime().getInstance(CacheManager.class);
 
-        assertNull(cache.get(5));
-    }
+        // test loaded caches
 
-    @Test
-    public void testCacheExpiry() throws InterruptedException {
+        Set<String> names = new HashSet<>();
+        cm.getCacheNames().forEach(names::add);
 
-        Cache<String, Integer> cache = CM.getCache("expiring", String.class, Integer.class);
-        Assert.assertNotNull(cache);
+        assertEquals(new HashSet<String>(asList("fromconfig")), names);
 
-        cache.put("five", 5);
+        // test cache config
+        Cache<Long, Long> cache = cm.getCache("fromconfig", Long.class, Long.class);
+        assertNotNull(cache);
 
-        assertEquals(Integer.valueOf(5), cache.get("five"));
+        cache.put(5l, 10l);
+
+        assertEquals(Long.valueOf(10), cache.get(5l));
         Thread.sleep(101);
 
-        assertNull(cache.get("five"));
+        assertNull(cache.get(5l));
     }
 
     @Test
-    public void testEntryFactory() {
+    public void testContributedAndXmlConfig() throws InterruptedException {
 
-        Cache<String, Integer> cache = CM.getCache("entryfactory", String.class, Integer.class);
-        Assert.assertNotNull(cache);
+        Factory<ExpiryPolicy> _100ms = CreatedExpiryPolicy.factoryOf(new Duration(TimeUnit.MILLISECONDS, 100));
+        Configuration<Long, Long> boundConfig = new MutableConfiguration<Long, Long>()
+                .setTypes(Long.class, Long.class)
+                .setExpiryPolicyFactory(_100ms);
 
-        assertNull(cache.get("one"));
-        AtomicInteger counter = new AtomicInteger();
+        BQTestRuntime runtime = testFactory.app("-c", Objects.requireNonNull("classpath:ehcache2.yml"))
+                .autoLoadModules()
+                .module(b -> EhCacheModule.contributeConfiguration(b).addBinding("fromconfig").toInstance(boundConfig))
+                .createRuntime();
 
-        EntryProcessor<String, Integer, Integer> mockEntryMaker = Mockito.mock(EntryProcessor.class);
-        when(mockEntryMaker.process(any(MutableEntry.class))).thenAnswer(new Answer<Integer>() {
+        CacheManager cm = runtime.getRuntime().getInstance(CacheManager.class);
 
-            @Override
-            public Integer answer(InvocationOnMock invocation) throws Throwable {
+        // test loaded caches
 
-                MutableEntry<String, Integer> e = (MutableEntry<String, Integer>) invocation.getArguments()[0];
-                if (!e.exists()) {
-                    e.setValue(counter.incrementAndGet());
-                }
+        Set<String> names = new HashSet<>();
+        cm.getCacheNames().forEach(names::add);
 
-                return e.getValue();
-            }
-        });
+        assertEquals(new HashSet<String>(asList("fromxml", "fromconfig")), names);
 
-        assertEquals(Integer.valueOf(1), cache.invoke("one", mockEntryMaker));
-        assertEquals(Integer.valueOf(1), cache.invoke("one", mockEntryMaker));
-        assertEquals(Integer.valueOf(2), cache.invoke("two", mockEntryMaker));
-        assertEquals(Integer.valueOf(2), cache.invoke("two", mockEntryMaker));
+        // test cache config
+        Cache<Long, Long> cache = cm.getCache("fromconfig", Long.class, Long.class);
+        assertNotNull(cache);
 
-        verify(mockEntryMaker, times(4));
+        cache.put(5l, 10l);
+
+        assertEquals(Long.valueOf(10), cache.get(5l));
+        Thread.sleep(101);
+
+        assertNull(cache.get(5l));
     }
-
-
 }

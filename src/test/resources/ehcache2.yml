@@ -1,0 +1,3 @@
+ehcache:
+  configs:
+    - "classpath:ehcache2.xml"

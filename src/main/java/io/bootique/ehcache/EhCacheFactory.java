@@ -6,11 +6,13 @@ import org.ehcache.jsr107.EhcacheCachingProvider;
 
 import javax.cache.CacheManager;
 import javax.cache.Caching;
+import javax.cache.configuration.Configuration;
 import javax.cache.spi.CachingProvider;
 import java.net.URI;
 import java.net.URISyntaxException;
 import java.util.Collections;
 import java.util.List;
+import java.util.Map;
 import java.util.Objects;
 import java.util.Optional;
 
@@ -26,12 +28,15 @@ public class EhCacheFactory {
         this.configs = Objects.requireNonNull(configs);
     }
 
-    public CacheManager createManager(ShutdownManager shutdownManager) {
+    public CacheManager createManager(Map<String, Configuration<?, ?>> configs, ShutdownManager shutdownManager) {
         CachingProvider provider = Caching.getCachingProvider(EhcacheCachingProvider.class.getName());
         shutdownManager.addShutdownHook(provider);
 
         CacheManager manager = getConfigUri().map(u -> provider.getCacheManager(u, null)).orElse(provider.getCacheManager());
         shutdownManager.addShutdownHook(manager);
+
+        // now load contributed configs
+        configs.forEach(manager::createCache);
 
         return manager;
     }
