@@ -2,7 +2,6 @@ package io.bootique.ehcache;
 
 import io.bootique.resource.ResourceFactory;
 import io.bootique.shutdown.ShutdownManager;
-import org.ehcache.jsr107.EhcacheCachingProvider;
 
 import javax.cache.CacheManager;
 import javax.cache.Caching;
@@ -29,7 +28,8 @@ public class EhCacheFactory {
     }
 
     public CacheManager createManager(Map<String, Configuration<?, ?>> configs, ShutdownManager shutdownManager) {
-        CachingProvider provider = Caching.getCachingProvider(EhcacheCachingProvider.class.getName());
+        
+        CachingProvider provider = Caching.getCachingProvider();
         shutdownManager.addShutdownHook(provider);
 
         CacheManager manager = getConfigUri().map(u -> provider.getCacheManager(u, null)).orElse(provider.getCacheManager());
