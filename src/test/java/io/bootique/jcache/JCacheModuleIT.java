@@ -1,4 +1,4 @@
-package io.bootique.ehcache;
+package io.bootique.jcache;
 
 import io.bootique.test.BQTestRuntime;
 import io.bootique.test.junit.BQTestFactory;
@@ -24,7 +24,7 @@ import static org.junit.Assert.assertNotNull;
 import static org.junit.Assert.assertNull;
 import static org.junit.Assert.assertTrue;
 
-public class EhCacheModuleIT {
+public class JCacheModuleIT {
 
     @Rule
     public BQTestFactory testFactory = new BQTestFactory();
@@ -55,7 +55,7 @@ public class EhCacheModuleIT {
 
         BQTestRuntime runtime = testFactory.app()
                 .autoLoadModules()
-                .module(b -> EhCacheModule.contributeConfiguration(b).addBinding("fromconfig").toInstance(boundConfig))
+                .module(b -> JCacheModule.contributeConfiguration(b).addBinding("fromconfig").toInstance(boundConfig))
                 .createRuntime();
 
         CacheManager cm = runtime.getRuntime().getInstance(CacheManager.class);
@@ -89,7 +89,7 @@ public class EhCacheModuleIT {
 
         BQTestRuntime runtime = testFactory.app("-c", Objects.requireNonNull("classpath:ehcache2.yml"))
                 .autoLoadModules()
-                .module(b -> EhCacheModule.contributeConfiguration(b).addBinding("fromconfig").toInstance(boundConfig))
+                .module(b -> JCacheModule.contributeConfiguration(b).addBinding("fromconfig").toInstance(boundConfig))
                 .createRuntime();
 
         CacheManager cm = runtime.getRuntime().getInstance(CacheManager.class);

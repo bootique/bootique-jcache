@@ -1,4 +1,4 @@
-package io.bootique.ehcache;
+package io.bootique.jcache;
 
 import io.bootique.test.BQTestRuntime;
 import io.bootique.test.junit.BQTestFactory;
@@ -23,7 +23,7 @@ import static org.mockito.Mockito.times;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 
-public class EhCacheModule_XMLConfigIT {
+public class JCacheModule_XMLConfigIT {
 
     @ClassRule
     public static BQTestFactory TEST_FACTORY = new BQTestFactory();

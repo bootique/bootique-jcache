@@ -1,1 +1,1 @@
-io.bootique.ehcache.EhCacheModuleProvider
+io.bootique.jcache.JCacheModuleProvider

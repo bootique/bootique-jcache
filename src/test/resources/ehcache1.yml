@@ -1,3 +1,3 @@
-ehcache:
+jcache:
   configs:
     - "classpath:ehcache1.xml"

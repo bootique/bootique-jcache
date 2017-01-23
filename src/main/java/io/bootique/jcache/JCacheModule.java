@@ -1,4 +1,4 @@
-package io.bootique.ehcache;
+package io.bootique.jcache;
 
 import com.google.inject.Binder;
 import com.google.inject.Provides;
@@ -13,7 +13,7 @@ import javax.cache.CacheManager;
 import javax.cache.configuration.Configuration;
 import java.util.Map;
 
-public class EhCacheModule extends ConfigModule {
+public class JCacheModule extends ConfigModule {
 
     public static MapBinder<String, Configuration<?, ?>> contributeConfiguration(Binder binder) {
         TypeLiteral<String> keyLiteral = new TypeLiteral<String>() {};
@@ -23,7 +23,7 @@ public class EhCacheModule extends ConfigModule {
 
     @Override
     public void configure(Binder binder) {
-        EhCacheModule.contributeConfiguration(binder);
+        JCacheModule.contributeConfiguration(binder);
     }
 
     @Singleton
@@ -31,6 +31,6 @@ public class EhCacheModule extends ConfigModule {
     CacheManager provideCacheManager(ConfigurationFactory configurationFactory,
                                      ShutdownManager shutdownManager,
                                      Map<String, Configuration<?, ?>> configs) {
-        return configurationFactory.config(EhCacheFactory.class, configPrefix).createManager(configs, shutdownManager);
+        return configurationFactory.config(JCacheFactory.class, configPrefix).createManager(configs, shutdownManager);
     }
 }
