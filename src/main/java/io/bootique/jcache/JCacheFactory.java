@@ -1,5 +1,7 @@
 package io.bootique.jcache;
 
+import io.bootique.annotation.BQConfig;
+import io.bootique.annotation.BQConfigProperty;
 import io.bootique.resource.ResourceFactory;
 import io.bootique.shutdown.ShutdownManager;
 
@@ -16,6 +18,7 @@ import java.util.Map;
 import java.util.Objects;
 import java.util.Optional;
 
+@BQConfig("A collection of configuration files in the format understood by the provider.")
 public class JCacheFactory {
 
     private List<ResourceFactory> configs;
@@ -24,6 +27,8 @@ public class JCacheFactory {
         this.configs = Collections.emptyList();
     }
 
+    @BQConfigProperty("A list of resource URLs pointing to cache configuration files in the format understood by the" +
+            " underlying JCache provider.")
     public void setConfigs(List<ResourceFactory> configs) {
         this.configs = Objects.requireNonNull(configs);
     }
@@ -32,6 +37,8 @@ public class JCacheFactory {
 
         CachingProvider provider;
         try {
+            // TODO: an explicit config property to pick explicit provider out of available choices... though probably
+            // pointless in most cases (do we realistically expect multiple providers on classpath?)
             provider = Caching.getCachingProvider();
         } catch (CacheException e) {
             throw new RuntimeException("'bootique-jcache' doesn't bundle any JCache providers. " +
