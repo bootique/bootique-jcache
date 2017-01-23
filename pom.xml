@@ -9,13 +9,13 @@
         <version>0.2</version>
     </parent>
 
-    <groupId>io.bootique.ehcache</groupId>
-    <artifactId>bootique-ehcache</artifactId>
+    <groupId>io.bootique.jcache</groupId>
+    <artifactId>bootique-jcache</artifactId>
     <version>0.1-SNAPSHOT</version>
     <packaging>jar</packaging>
 
-    <name>bootique-ehcache: Ehcache Integration with Bootique</name>
-    <description>Provides Ehcache integration with Bootique</description>
+    <name>bootique-ehcache: JCache Integration with Bootique</name>
+    <description>Provides JCache integration with Bootique</description>
 
     <properties>
         <bootique-version>0.21-SNAPSHOT</bootique-version>
@@ -24,8 +24,8 @@
     </properties>
 
     <scm>
-        <developerConnection>scm:git:ssh://git@github.com/bootique/bootique-ehcache</developerConnection>
-        <url>https://github.com/bootique/bootique-ehcache</url>
+        <developerConnection>scm:git:ssh://git@github.com/bootique/bootique-jcache</developerConnection>
+        <url>https://github.com/bootique/bootique-jcache</url>
         <tag>HEAD</tag>
     </scm>
 
@@ -33,7 +33,7 @@
         <repository>
             <id>bintray-bootique-releases</id>
             <name>bintray-bootique-releases</name>
-            <url>https://api.bintray.com/maven/bootique/releases/bootique-ehcache/;publish=1</url>
+            <url>https://api.bintray.com/maven/bootique/releases/bootique-jcache/;publish=1</url>
         </repository>
     </distributionManagement>
 
