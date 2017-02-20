@@ -55,7 +55,7 @@ public class JCacheModuleIT {
 
         BQTestRuntime runtime = testFactory.app()
                 .autoLoadModules()
-                .module(b -> JCacheModule.contributeConfiguration(b).addBinding("fromconfig").toInstance(boundConfig))
+                .module(b -> JCacheModule.extend(b).setConfiguration("fromconfig", boundConfig))
                 .createRuntime();
 
         CacheManager cm = runtime.getRuntime().getInstance(CacheManager.class);
@@ -89,7 +89,7 @@ public class JCacheModuleIT {
 
         BQTestRuntime runtime = testFactory.app("-c", Objects.requireNonNull("classpath:ehcache2.yml"))
                 .autoLoadModules()
-                .module(b -> JCacheModule.contributeConfiguration(b).addBinding("fromconfig").toInstance(boundConfig))
+                .module(b -> JCacheModule.extend(b).setConfiguration("fromconfig", boundConfig))
                 .createRuntime();
 
         CacheManager cm = runtime.getRuntime().getInstance(CacheManager.class);

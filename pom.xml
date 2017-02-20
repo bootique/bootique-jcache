@@ -17,7 +17,7 @@
     <description>Provides JCache integration with Bootique</description>
 
     <properties>
-        <bootique-version>0.21</bootique-version>
+        <bootique-version>0.22-SNAPSHOT</bootique-version>
         <ehcache-version>3.1.3</ehcache-version>
         <jcache-version>1.0.0</jcache-version>
     </properties>
