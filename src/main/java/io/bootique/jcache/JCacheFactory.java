@@ -65,11 +65,11 @@ public class JCacheFactory {
                 try {
                     return Optional.of(configs.get(0).getUrl().toURI());
                 } catch (URISyntaxException e) {
-                    throw new IllegalStateException("Error confverting config to URI: " + configs.get(0));
+                    throw new IllegalStateException("Error converting config to URI: " + configs.get(0));
                 }
             default:
                 // TODO: how do we merge multiple configs?
-                throw new IllegalStateException("More than one EhCache configuration specified. Currently unsupported");
+                throw new IllegalStateException("More than one JCache configuration specified. Currently unsupported");
         }
     }
 }
