@@ -13,7 +13,7 @@
     <version>0.2-SNAPSHOT</version>
     <packaging>jar</packaging>
 
-    <name>bootique-ehcache: JCache Integration with Bootique</name>
+    <name>bootique-jcache: JCache Integration with Bootique</name>
     <description>Provides JCache integration with Bootique</description>
 
     <properties>
