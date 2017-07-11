@@ -1,6 +1,6 @@
 package io.bootique.jcache;
 
-import io.bootique.test.BQTestRuntime;
+import io.bootique.BQRuntime;
 import io.bootique.test.junit.BQTestFactory;
 import org.junit.Rule;
 import org.junit.Test;
@@ -32,11 +32,11 @@ public class JCacheModuleIT {
     @Test
     public void testNoConfig() throws InterruptedException {
 
-        BQTestRuntime runtime = testFactory.app()
+        BQRuntime runtime = testFactory.app()
                 .autoLoadModules()
                 .createRuntime();
 
-        CacheManager cm = runtime.getRuntime().getInstance(CacheManager.class);
+        CacheManager cm = runtime.getInstance(CacheManager.class);
 
         assertNotNull(cm);
 
@@ -53,12 +53,12 @@ public class JCacheModuleIT {
                 .setTypes(Long.class, Long.class)
                 .setExpiryPolicyFactory(_100ms);
 
-        BQTestRuntime runtime = testFactory.app()
+        BQRuntime runtime = testFactory.app()
                 .autoLoadModules()
                 .module(b -> JCacheModule.extend(b).setConfiguration("fromconfig", boundConfig))
                 .createRuntime();
 
-        CacheManager cm = runtime.getRuntime().getInstance(CacheManager.class);
+        CacheManager cm = runtime.getInstance(CacheManager.class);
 
         // test loaded caches
 
@@ -87,12 +87,12 @@ public class JCacheModuleIT {
                 .setTypes(Long.class, Long.class)
                 .setExpiryPolicyFactory(_100ms);
 
-        BQTestRuntime runtime = testFactory.app("-c", Objects.requireNonNull("classpath:ehcache2.yml"))
+        BQRuntime runtime = testFactory.app("-c", Objects.requireNonNull("classpath:ehcache2.yml"))
                 .autoLoadModules()
                 .module(b -> JCacheModule.extend(b).setConfiguration("fromconfig", boundConfig))
                 .createRuntime();
 
-        CacheManager cm = runtime.getRuntime().getInstance(CacheManager.class);
+        CacheManager cm = runtime.getInstance(CacheManager.class);
 
         // test loaded caches
 

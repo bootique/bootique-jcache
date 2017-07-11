@@ -1,6 +1,6 @@
 package io.bootique.jcache;
 
-import io.bootique.test.BQTestRuntime;
+import io.bootique.BQRuntime;
 import io.bootique.test.junit.BQTestFactory;
 import org.junit.Assert;
 import org.junit.BeforeClass;
@@ -33,11 +33,11 @@ public class JCacheModule_XMLConfigIT {
     @BeforeClass
     public static void initCaches() {
 
-        BQTestRuntime runtime = TEST_FACTORY.app("-c", "classpath:ehcache1.yml")
+        BQRuntime runtime = TEST_FACTORY.app("-c", "classpath:ehcache1.yml")
                 .autoLoadModules()
                 .createRuntime();
 
-        CM = runtime.getRuntime().getInstance(CacheManager.class);
+        CM = runtime.getInstance(CacheManager.class);
     }
 
     @Test

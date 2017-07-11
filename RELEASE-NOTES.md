@@ -1,3 +1,7 @@
+## 0.3
+
+* #7 Upgrade to BQ 0.23
+
 ## 0.2
 
 * #5 Upgrade to bootique 0.22 and start using "extend" pattern for contributions
