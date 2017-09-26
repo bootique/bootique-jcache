@@ -7,3 +7,5 @@ Integration of JCache caching API with Bootique. Provides injectable CacheManage
 
 `bootique-jcache` **does not** bundle a JCache provider. You will need to explicitly include a provider of your choice 
 on the classpath of your application, such as EhCache, Hazelcast, etc.
+
+See usage example [bootique-jcache-demo](https://github.com/bootique-examples/bootique-jcache-demo).
