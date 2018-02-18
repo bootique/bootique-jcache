@@ -7,6 +7,6 @@ public class JCacheModuleProviderTest {
 
     @Test
     public void testAutoLoading() {
-        BQModuleProviderChecker.testPresentInJar(JCacheModuleProvider.class);
+        BQModuleProviderChecker.testAutoLoadable(JCacheModuleProvider.class);
     }
 }
