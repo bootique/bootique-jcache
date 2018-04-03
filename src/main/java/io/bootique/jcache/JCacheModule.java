@@ -3,7 +3,6 @@ package io.bootique.jcache;
 import com.google.inject.Binder;
 import com.google.inject.Provides;
 import com.google.inject.Singleton;
-import com.google.inject.multibindings.MapBinder;
 import io.bootique.ConfigModule;
 import io.bootique.config.ConfigurationFactory;
 import io.bootique.shutdown.ShutdownManager;
@@ -24,17 +23,6 @@ public class JCacheModule extends ConfigModule {
      */
     public static JCacheModuleExtender extend(Binder binder) {
         return new JCacheModuleExtender(binder);
-    }
-
-    /**
-     * @param binder DI binder
-     * @return a binder for configs.
-     * @deprecated since 0.2 use {@link #extend(Binder)} to get an extender object, and
-     * then call {@link JCacheModuleExtender#setConfiguration(String, Configuration)} or similar.
-     */
-    @Deprecated
-    public static MapBinder<String, Configuration<?, ?>> contributeConfiguration(Binder binder) {
-        return extend(binder).contributeConfiguration();
     }
 
     @Override
