@@ -18,8 +18,8 @@
 
     <properties>
         <bootique-version>${project.version}</bootique-version>
-        <ehcache-version>3.1.3</ehcache-version>
-        <jcache-version>1.0.0</jcache-version>
+        <ehcache-version>3.5.2</ehcache-version>
+        <jcache-version>1.1.0</jcache-version>
         <jaxb-version>2.3.0</jaxb-version>
         <activation-version>1.1.1</activation-version>
     </properties>
@@ -89,6 +89,18 @@
     </dependencyManagement>
 
     <dependencies>
+        <!-- Compile dependencies -->
+        <dependency>
+            <groupId>io.bootique</groupId>
+            <artifactId>bootique</artifactId>
+            <scope>compile</scope>
+        </dependency>
+        <dependency>
+            <groupId>javax.cache</groupId>
+            <artifactId>cache-api</artifactId>
+            <scope>compile</scope>
+        </dependency>
+        
         <!-- Unit test dependencies -->
         <dependency>
             <groupId>junit</groupId>
@@ -135,18 +147,6 @@
             <groupId>javax.activation</groupId>
             <artifactId>activation</artifactId>
             <scope>test</scope>
-        </dependency>
-
-        <!-- Compile dependencies -->
-        <dependency>
-            <groupId>io.bootique</groupId>
-            <artifactId>bootique</artifactId>
-            <scope>compile</scope>
-        </dependency>
-        <dependency>
-            <groupId>javax.cache</groupId>
-            <artifactId>cache-api</artifactId>
-            <scope>compile</scope>
         </dependency>
     </dependencies>
 
