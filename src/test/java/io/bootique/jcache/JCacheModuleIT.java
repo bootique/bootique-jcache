@@ -13,8 +13,8 @@ import javax.cache.configuration.MutableConfiguration;
 import javax.cache.expiry.CreatedExpiryPolicy;
 import javax.cache.expiry.Duration;
 import javax.cache.expiry.ExpiryPolicy;
+import java.util.Collections;
 import java.util.HashSet;
-import java.util.Objects;
 import java.util.Set;
 import java.util.concurrent.TimeUnit;
 
@@ -30,7 +30,7 @@ public class JCacheModuleIT {
     public BQTestFactory testFactory = new BQTestFactory();
 
     @Test
-    public void testNoConfig() throws InterruptedException {
+    public void testNoConfig() {
 
         BQRuntime runtime = testFactory.app()
                 .autoLoadModules()
@@ -65,18 +65,18 @@ public class JCacheModuleIT {
         Set<String> names = new HashSet<>();
         cm.getCacheNames().forEach(names::add);
 
-        assertEquals(new HashSet<String>(asList("fromconfig")), names);
+        assertEquals(Collections.singleton("fromconfig"), names);
 
         // test cache config
         Cache<Long, Long> cache = cm.getCache("fromconfig", Long.class, Long.class);
         assertNotNull(cache);
 
-        cache.put(5l, 10l);
+        cache.put(5L, 10L);
 
-        assertEquals(Long.valueOf(10), cache.get(5l));
+        assertEquals(Long.valueOf(10), cache.get(5L));
         Thread.sleep(101);
 
-        assertNull(cache.get(5l));
+        assertNull(cache.get(5L));
     }
 
     @Test
@@ -87,7 +87,7 @@ public class JCacheModuleIT {
                 .setTypes(Long.class, Long.class)
                 .setExpiryPolicyFactory(_100ms);
 
-        BQRuntime runtime = testFactory.app("-c", Objects.requireNonNull("classpath:ehcache2.yml"))
+        BQRuntime runtime = testFactory.app("-c", "classpath:ehcache2.yml")
                 .autoLoadModules()
                 .module(b -> JCacheModule.extend(b).setConfiguration("fromconfig", boundConfig))
                 .createRuntime();
@@ -99,17 +99,17 @@ public class JCacheModuleIT {
         Set<String> names = new HashSet<>();
         cm.getCacheNames().forEach(names::add);
 
-        assertEquals(new HashSet<String>(asList("fromxml", "fromconfig")), names);
+        assertEquals(new HashSet<>(asList("fromxml", "fromconfig")), names);
 
         // test cache config
         Cache<Long, Long> cache = cm.getCache("fromconfig", Long.class, Long.class);
         assertNotNull(cache);
 
-        cache.put(5l, 10l);
+        cache.put(5L, 10L);
 
-        assertEquals(Long.valueOf(10), cache.get(5l));
+        assertEquals(Long.valueOf(10), cache.get(5L));
         Thread.sleep(101);
 
-        assertNull(cache.get(5l));
+        assertNull(cache.get(5L));
     }
 }

@@ -7,7 +7,6 @@ import org.junit.BeforeClass;
 import org.junit.ClassRule;
 import org.junit.Test;
 import org.mockito.Mockito;
-import org.mockito.invocation.InvocationOnMock;
 import org.mockito.stubbing.Answer;
 
 import javax.cache.Cache;
@@ -18,7 +17,7 @@ import java.util.concurrent.atomic.AtomicInteger;
 
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNull;
-import static org.mockito.Matchers.any;
+import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.times;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
@@ -79,18 +78,14 @@ public class JCacheModule_XMLConfigIT {
         AtomicInteger counter = new AtomicInteger();
 
         EntryProcessor<String, Integer, Integer> mockEntryMaker = Mockito.mock(EntryProcessor.class);
-        when(mockEntryMaker.process(any(MutableEntry.class))).thenAnswer(new Answer<Integer>() {
+        when(mockEntryMaker.process(any(MutableEntry.class))).thenAnswer((Answer<Integer>) invocation -> {
 
-            @Override
-            public Integer answer(InvocationOnMock invocation) throws Throwable {
-
-                MutableEntry<String, Integer> e = (MutableEntry<String, Integer>) invocation.getArguments()[0];
-                if (!e.exists()) {
-                    e.setValue(counter.incrementAndGet());
-                }
-
-                return e.getValue();
+            MutableEntry<String, Integer> e = (MutableEntry<String, Integer>) invocation.getArguments()[0];
+            if (!e.exists()) {
+                e.setValue(counter.incrementAndGet());
             }
+
+            return e.getValue();
         });
 
         assertEquals(Integer.valueOf(1), cache.invoke("one", mockEntryMaker));
