@@ -36,28 +36,10 @@ Integration of JCache caching API with Bootique. Provides injectable CacheManage
 </dependency>
 ```
 
-*Note:* **bootique-jcahce** is a part of [bootique-bom](https://github.com/bootique/bootique-bom), and version is 
-imported from there.
-
-## Available commands
-
-```
-OPTIONS
-      -c yaml_location, --config=yaml_location
-           Specifies YAML config location, which can be a file path or a URL.
-
-      -h, --help
-           Prints this message.
-
-      -H, --help-config
-           Prints information about application modules and their configuration
-           options.
-```
-
 ## Example Project
 
 `bootique-jcache` **does not** bundle a JCache provider. You will need to explicitly include a provider of your choice 
-on the classpath of your application, such as EhCache, Hazelcast, etc.
+on the classpath of your application, such as EhCache, Caffeine, Hazelcast, etc.
 
 See usage examples:
 * [bootique-ehcache-demo](https://github.com/bootique-examples/bootique-jcache-demo/tree/master/bootique-ehcache-demo) -
