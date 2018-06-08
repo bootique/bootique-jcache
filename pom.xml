@@ -5,7 +5,7 @@
     <parent>
         <groupId>io.bootique.modules.parent</groupId>
         <artifactId>bootique-modules-parent</artifactId>
-        <version>0.8</version>
+        <version>0.10</version>
     </parent>
 
     <groupId>io.bootique.jcache</groupId>
@@ -17,11 +17,9 @@
     <description>Provides JCache integration with Bootique</description>
 
     <properties>
-        <bootique-version>${project.version}</bootique-version>
-        <ehcache-version>3.5.2</ehcache-version>
-        <jcache-version>1.1.0</jcache-version>
-        <jaxb-version>2.3.0</jaxb-version>
-        <activation-version>1.1.1</activation-version>
+        <bootique.version>${project.version}</bootique.version>
+        <ehcache.version>3.5.2</ehcache.version>
+        <jcache.version>1.1.0</jcache.version>
     </properties>
 
     <scm>
@@ -43,47 +41,33 @@
             <dependency>
                 <groupId>org.ehcache</groupId>
                 <artifactId>ehcache</artifactId>
-                <version>${ehcache-version}</version>
-            </dependency>
-            <dependency>
-                <groupId>javax.xml.bind</groupId>
-                <artifactId>jaxb-api</artifactId>
-                <version>${jaxb-version}</version>
+                <version>${ehcache.version}</version>
             </dependency>
             <dependency>
                 <groupId>com.sun.xml.bind</groupId>
                 <artifactId>jaxb-impl</artifactId>
-                <version>${jaxb-version}</version>
+                <version>${jaxb.version}</version>
             </dependency>
             <dependency>
                 <groupId>com.sun.xml.bind</groupId>
                 <artifactId>jaxb-core</artifactId>
-                <version>${jaxb-version}</version>
+                <version>${jaxb.version}</version>
             </dependency>
-            <dependency>
-                <groupId>javax.activation</groupId>
-                <artifactId>activation</artifactId>
-                <version>${activation-version}</version>
-            </dependency>
+
             <dependency>
                 <groupId>javax.cache</groupId>
                 <artifactId>cache-api</artifactId>
-                <version>${jcache-version}</version>
+                <version>${jcache.version}</version>
             </dependency>
             <dependency>
                 <groupId>io.bootique</groupId>
                 <artifactId>bootique</artifactId>
-                <version>${bootique-version}</version>
+                <version>${bootique.version}</version>
             </dependency>
             <dependency>
                 <groupId>io.bootique</groupId>
                 <artifactId>bootique-test</artifactId>
-                <version>${bootique-version}</version>
-            </dependency>
-            <dependency>
-                <groupId>org.slf4j</groupId>
-                <artifactId>slf4j-simple</artifactId>
-                <version>${slf4j.version}</version>
+                <version>${bootique.version}</version>
             </dependency>
         </dependencies>
     </dependencyManagement>
