@@ -18,7 +18,7 @@
   -->
 
 [![Build Status](https://travis-ci.org/bootique/bootique-jcache.svg)](https://travis-ci.org/bootique/bootique-jcache)
-[![Maven Central](https://maven-badges.herokuapp.com/maven-central/io.bootique.jcache/bootique-jcache/badge.svg)](https://maven-badges.herokuapp.com/maven-central/io.bootique.jcache/bootique-jcache/)
+[![Maven Central](https://img.shields.io/maven-central/v/io.bootique.jcache/bootique-jcache.svg?colorB=brightgreen)](https://search.maven.org/artifact/io.bootique.jcache/bootique-jcache/)
 
 # bootique-jcache
 
