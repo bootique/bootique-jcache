@@ -51,9 +51,10 @@ public class JCacheModule extends ConfigModule {
 
     @Singleton
     @Provides
-    CacheManager provideCacheManager(ConfigurationFactory configurationFactory,
+    CacheManager provideCacheManager(ConfigurationFactory configFactory,
                                      ShutdownManager shutdownManager,
                                      Map<String, Configuration<?, ?>> configs) {
-        return configurationFactory.config(JCacheFactory.class, configPrefix).createManager(configs, shutdownManager);
+
+        return config(JCacheFactory.class, configFactory).createManager(configs, shutdownManager);
     }
 }
