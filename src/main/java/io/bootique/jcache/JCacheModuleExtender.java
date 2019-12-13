@@ -19,11 +19,11 @@
 
 package io.bootique.jcache;
 
-import com.google.inject.Binder;
-import com.google.inject.TypeLiteral;
-import com.google.inject.multibindings.MapBinder;
-
 import javax.cache.configuration.Configuration;
+
+import io.bootique.di.Binder;
+import io.bootique.di.MapBuilder;
+import io.bootique.di.TypeLiteral;
 
 /**
  * @since 0.2
@@ -32,7 +32,7 @@ public class JCacheModuleExtender {
 
     private Binder binder;
 
-    private MapBinder<String, Configuration<?, ?>> configurations;
+    private MapBuilder<String, Configuration<?, ?>> configurations;
 
     JCacheModuleExtender(Binder binder) {
         this.binder = binder;
@@ -44,23 +44,23 @@ public class JCacheModuleExtender {
     }
 
     public JCacheModuleExtender setConfiguration(String name, Configuration<?, ?> config) {
-        contributeConfiguration().addBinding(name).toInstance(config);
+        contributeConfiguration().put(name, config);
         return this;
     }
 
     public JCacheModuleExtender setConfiguration(String name, Class<? extends Configuration<?, ?>> configType) {
-        contributeConfiguration().addBinding(name).to(configType);
+        contributeConfiguration().put(name, configType);
         return this;
     }
 
-    protected MapBinder<String, Configuration<?, ?>> contributeConfiguration() {
+    protected MapBuilder<String, Configuration<?, ?>> contributeConfiguration() {
 
         if (configurations == null) {
             TypeLiteral<String> keyLiteral = new TypeLiteral<String>() {
             };
             TypeLiteral<Configuration<?, ?>> valueLiteral = new TypeLiteral<Configuration<?, ?>>() {
             };
-            configurations = MapBinder.newMapBinder(binder, keyLiteral, valueLiteral);
+            configurations = binder.bindMap(keyLiteral, valueLiteral);
         }
 
         return configurations;

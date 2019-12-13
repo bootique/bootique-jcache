@@ -19,15 +19,15 @@
 
 package io.bootique.jcache;
 
-import com.google.inject.Binder;
-import com.google.inject.Provides;
-import com.google.inject.Singleton;
 import io.bootique.ConfigModule;
 import io.bootique.config.ConfigurationFactory;
+import io.bootique.di.Binder;
+import io.bootique.di.Provides;
 import io.bootique.shutdown.ShutdownManager;
 
 import javax.cache.CacheManager;
 import javax.cache.configuration.Configuration;
+import javax.inject.Singleton;
 import java.util.Map;
 
 public class JCacheModule extends ConfigModule {

@@ -19,9 +19,9 @@
 
 package io.bootique.jcache;
 
-import com.google.inject.Module;
-import io.bootique.BQModule;
+import io.bootique.BQModuleMetadata;
 import io.bootique.BQModuleProvider;
+import io.bootique.di.BQModule;
 
 import java.lang.reflect.Type;
 import java.util.Collections;
@@ -30,7 +30,7 @@ import java.util.Map;
 public class JCacheModuleProvider implements BQModuleProvider {
 
     @Override
-    public Module module() {
+    public BQModule module() {
         return new JCacheModule();
     }
 
@@ -42,7 +42,7 @@ public class JCacheModuleProvider implements BQModuleProvider {
     }
 
     @Override
-    public BQModule.Builder moduleBuilder() {
+    public BQModuleMetadata.Builder moduleBuilder() {
         return BQModuleProvider.super
                 .moduleBuilder()
                 .description("Provides configuration for JCache subsystem. Module itself does NOT include a JCache provider."
