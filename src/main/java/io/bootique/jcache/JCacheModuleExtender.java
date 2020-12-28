@@ -44,7 +44,7 @@ public class JCacheModuleExtender {
     }
 
     public JCacheModuleExtender setConfiguration(String name, Configuration<?, ?> config) {
-        contributeConfiguration().put(name, config);
+        contributeConfiguration().putInstance(name, config);
         return this;
     }
 
