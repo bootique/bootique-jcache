@@ -17,7 +17,7 @@
   under the License.
   -->
 
-[![Build Status](https://travis-ci.org/bootique/bootique-jcache.svg)](https://travis-ci.org/bootique/bootique-jcache)
+[![build test deploy](https://github.com/bootique/bootique-jcache/actions/workflows/maven.yml/badge.svg)](https://github.com/bootique/bootique-jcache/actions/workflows/maven.yml)
 [![Maven Central](https://img.shields.io/maven-central/v/io.bootique.jcache/bootique-jcache.svg?colorB=brightgreen)](https://search.maven.org/artifact/io.bootique.jcache/bootique-jcache/)
 
 # bootique-jcache
