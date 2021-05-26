@@ -19,15 +19,12 @@
 
 package io.bootique.jcache;
 
-import javax.cache.configuration.Configuration;
-
 import io.bootique.di.Binder;
 import io.bootique.di.MapBuilder;
 import io.bootique.di.TypeLiteral;
 
-/**
- * @since 0.2
- */
+import javax.cache.configuration.Configuration;
+
 public class JCacheModuleExtender {
 
     private Binder binder;

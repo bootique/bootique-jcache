@@ -38,7 +38,6 @@ public class JCacheModule extends ConfigModule {
      *
      * @param binder DI binder passed to the Module that invokes this method.
      * @return an instance of {@link JCacheModuleExtender} that can be used to load custom extensions to the JCacheModule.
-     * @since 0.2
      */
     public static JCacheModuleExtender extend(Binder binder) {
         return new JCacheModuleExtender(binder);
