@@ -88,7 +88,7 @@ public class JCacheFactory {
                 }
             default:
                 // TODO: how do we merge multiple configs?
-                throw new IllegalStateException("More than one JCache configuration specified. Currently unsupported");
+                throw new IllegalStateException("More than one JCache configuration specified. Currently unsupported: " + configs);
         }
     }
 }
