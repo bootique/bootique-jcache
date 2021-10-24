@@ -20,11 +20,10 @@
 package io.bootique.jcache;
 
 import io.bootique.BQRuntime;
-import io.bootique.test.junit.BQTestFactory;
-import org.junit.Assert;
-import org.junit.BeforeClass;
-import org.junit.ClassRule;
-import org.junit.Test;
+import io.bootique.Bootique;
+import io.bootique.junit5.BQApp;
+import io.bootique.junit5.BQTest;
+import org.junit.jupiter.api.Test;
 import org.mockito.Mockito;
 import org.mockito.stubbing.Answer;
 
@@ -34,35 +33,25 @@ import javax.cache.processor.EntryProcessor;
 import javax.cache.processor.MutableEntry;
 import java.util.concurrent.atomic.AtomicInteger;
 
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertNull;
+import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.ArgumentMatchers.any;
-import static org.mockito.Mockito.times;
-import static org.mockito.Mockito.verify;
-import static org.mockito.Mockito.when;
+import static org.mockito.Mockito.*;
 
+@BQTest
 public class JCacheModule_XMLConfigIT {
 
-    @ClassRule
-    public static BQTestFactory TEST_FACTORY = new BQTestFactory();
-
-    private static CacheManager CM;
-
-    @BeforeClass
-    public static void initCaches() {
-
-        BQRuntime runtime = TEST_FACTORY.app("-c", "classpath:ehcache1.yml")
-                .autoLoadModules()
-                .createRuntime();
-
-        CM = runtime.getInstance(CacheManager.class);
-    }
+    @BQApp(skipRun = true)
+    static final BQRuntime app = Bootique.app("-c", "classpath:ehcache1.yml")
+            .autoLoadModules()
+            .createRuntime();
 
     @Test
     public void testCache() {
 
-        Cache<Integer, String> cache = CM.getCache("2entry", Integer.class, String.class);
-        Assert.assertNotNull(cache);
+        Cache<Integer, String> cache = app.getInstance(CacheManager.class)
+                .getCache("2entry", Integer.class, String.class);
+
+        assertNotNull(cache);
 
         cache.put(3, "three");
         assertEquals("three", cache.get(3));
@@ -76,8 +65,9 @@ public class JCacheModule_XMLConfigIT {
     @Test
     public void testCacheExpiry() throws InterruptedException {
 
-        Cache<String, Integer> cache = CM.getCache("expiring", String.class, Integer.class);
-        Assert.assertNotNull(cache);
+        Cache<String, Integer> cache = app.getInstance(CacheManager.class)
+                .getCache("expiring", String.class, Integer.class);
+        assertNotNull(cache);
 
         cache.put("five", 5);
 
@@ -90,8 +80,9 @@ public class JCacheModule_XMLConfigIT {
     @Test
     public void testEntryFactory() {
 
-        Cache<String, Integer> cache = CM.getCache("entryfactory", String.class, Integer.class);
-        Assert.assertNotNull(cache);
+        Cache<String, Integer> cache = app.getInstance(CacheManager.class)
+                .getCache("entryfactory", String.class, Integer.class);
+        assertNotNull(cache);
 
         assertNull(cache.get("one"));
         AtomicInteger counter = new AtomicInteger();
