@@ -42,7 +42,7 @@ Integration of JCache caching API with Bootique. Provides injectable CacheManage
         <dependency>
             <groupId>io.bootique.bom</groupId>
             <artifactId>bootique-bom</artifactId>
-            <version>2.0.B1</version>
+            <version>2.0.1</version>
             <type>pom</type>
             <scope>import</scope>
         </dependency>
