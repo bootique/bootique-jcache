@@ -54,11 +54,12 @@
                 <groupId>org.ehcache</groupId>
                 <artifactId>ehcache</artifactId>
                 <version>${ehcache.version}</version>
+                <classifier>jakarta</classifier>
             </dependency>
             <dependency>
                 <groupId>org.glassfish.jaxb</groupId>
                 <artifactId>jaxb-runtime</artifactId>
-                <version>2.3.8</version>
+                <version>4.0.3</version>
             </dependency>
             <dependency>
                 <groupId>javax.cache</groupId>
@@ -119,6 +120,7 @@
             <groupId>org.ehcache</groupId>
             <artifactId>ehcache</artifactId>
             <scope>test</scope>
+            <classifier>jakarta</classifier>
         </dependency>
         <!-- Needed by Ehache 3.10.x-->
         <dependency>
