@@ -48,7 +48,7 @@ public class JCacheModuleIT {
     final BQTestFactory testFactory = new BQTestFactory();
 
     @Test
-    public void testNoConfig() {
+    public void noConfig() {
 
         BQRuntime runtime = testFactory.app()
                 .autoLoadModules()
@@ -64,7 +64,7 @@ public class JCacheModuleIT {
     }
 
     @Test
-    public void testContributedConfig() throws InterruptedException {
+    public void contributedConfig() throws InterruptedException {
 
         Factory<ExpiryPolicy> _100ms = CreatedExpiryPolicy.factoryOf(new Duration(TimeUnit.MILLISECONDS, 100));
         Configuration<Long, Long> boundConfig = new MutableConfiguration<Long, Long>()
@@ -98,7 +98,7 @@ public class JCacheModuleIT {
     }
 
     @Test
-    public void testContributedAndXmlConfig() throws InterruptedException {
+    public void contributedAndXmlConfig() throws InterruptedException {
 
         Factory<ExpiryPolicy> _100ms = CreatedExpiryPolicy.factoryOf(new Duration(TimeUnit.MILLISECONDS, 100));
         Configuration<Long, Long> boundConfig = new MutableConfiguration<Long, Long>()

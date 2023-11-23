@@ -46,7 +46,7 @@ public class JCacheModule_XMLConfigIT {
             .createRuntime();
 
     @Test
-    public void testCache() {
+    public void cache() {
 
         Cache<Integer, String> cache = app.getInstance(CacheManager.class)
                 .getCache("2entry", Integer.class, String.class);
@@ -63,7 +63,7 @@ public class JCacheModule_XMLConfigIT {
     }
 
     @Test
-    public void testCacheExpiry() throws InterruptedException {
+    public void cacheExpiry() throws InterruptedException {
 
         Cache<String, Integer> cache = app.getInstance(CacheManager.class)
                 .getCache("expiring", String.class, Integer.class);
@@ -78,7 +78,7 @@ public class JCacheModule_XMLConfigIT {
     }
 
     @Test
-    public void testEntryFactory() {
+    public void entryFactory() {
 
         Cache<String, Integer> cache = app.getInstance(CacheManager.class)
                 .getCache("entryfactory", String.class, Integer.class);

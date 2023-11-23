@@ -25,7 +25,7 @@ import org.junit.jupiter.api.Test;
 public class JCacheModuleProviderTest {
 
     @Test
-    public void testAutoLoading() {
+    public void autoLoading() {
         BQModuleProviderChecker.testAutoLoadable(JCacheModuleProvider.class);
     }
 }
