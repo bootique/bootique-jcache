@@ -19,8 +19,10 @@
 
 package io.bootique.jcache;
 
-import io.bootique.ConfigModule;
+import io.bootique.BQModuleProvider;
+import io.bootique.bootstrap.BuiltModule;
 import io.bootique.config.ConfigurationFactory;
+import io.bootique.di.BQModule;
 import io.bootique.di.Binder;
 import io.bootique.di.Provides;
 import io.bootique.shutdown.ShutdownManager;
@@ -30,7 +32,9 @@ import javax.cache.configuration.Configuration;
 import javax.inject.Singleton;
 import java.util.Map;
 
-public class JCacheModule extends ConfigModule {
+public class JCacheModule implements BQModule, BQModuleProvider {
+
+    private static final String CONFIG_PREFIX = "jcache";
 
     /**
      * Returns an instance of {@link JCacheModuleExtender} used by downstream modules to load custom extensions to the
@@ -44,16 +48,27 @@ public class JCacheModule extends ConfigModule {
     }
 
     @Override
+    public BuiltModule buildModule() {
+        return BuiltModule.of(new JCacheModule())
+                .provider(this)
+                .description("Integrates configuration for the JCache subsystem. Module itself does not include a JCache " +
+                        "provider. Users will need to add a provider of their choice to the application classpath.")
+                .config(CONFIG_PREFIX, JCacheFactory.class)
+                .build();
+    }
+
+    @Override
     public void configure(Binder binder) {
         JCacheModule.extend(binder).initAllExtensions();
     }
 
     @Singleton
     @Provides
-    CacheManager provideCacheManager(ConfigurationFactory configFactory,
-                                     ShutdownManager shutdownManager,
-                                     Map<String, Configuration<?, ?>> configs) {
+    CacheManager provideCacheManager(
+            ConfigurationFactory configFactory,
+            ShutdownManager shutdownManager,
+            Map<String, Configuration<?, ?>> configs) {
 
-        return config(JCacheFactory.class, configFactory).createManager(configs, shutdownManager);
+        return configFactory.config(JCacheFactory.class, CONFIG_PREFIX).createManager(configs, shutdownManager);
     }
 }

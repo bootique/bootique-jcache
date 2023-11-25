@@ -19,18 +19,13 @@
 
 package io.bootique.jcache;
 
-import io.bootique.BQModuleProvider;
-import io.bootique.bootstrap.BuiltModule;
+import io.bootique.junit5.BQModuleProviderChecker;
+import org.junit.jupiter.api.Test;
 
-public class JCacheModuleProvider implements BQModuleProvider {
+public class JCacheModuleTest {
 
-    @Override
-    public BuiltModule buildModule() {
-        return BuiltModule.of(new JCacheModule())
-                .provider(this)
-                .description("Integrates configuration for the JCache subsystem. Module itself does NOT include a JCache " +
-                        "provider. Users will need to add a provider of their choice to the application classpath.")
-                .config("jcache", JCacheFactory.class)
-                .build();
+    @Test
+    public void autoLoading() {
+        BQModuleProviderChecker.testAutoLoadable(JCacheModule.class);
     }
 }
