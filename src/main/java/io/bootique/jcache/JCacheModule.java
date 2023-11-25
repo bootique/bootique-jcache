@@ -49,8 +49,7 @@ public class JCacheModule implements BQModule, BQModuleProvider {
 
     @Override
     public BuiltModule buildModule() {
-        return BuiltModule.of(new JCacheModule())
-                .provider(this)
+        return BuiltModule.of(this)
                 .description("Integrates configuration for the JCache subsystem. Module itself does not include a JCache " +
                         "provider. Users will need to add a provider of their choice to the application classpath.")
                 .config(CONFIG_PREFIX, JCacheFactory.class)
