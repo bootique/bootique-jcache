@@ -20,7 +20,7 @@
 package io.bootique.jcache;
 
 import io.bootique.BQModuleProvider;
-import io.bootique.bootstrap.BuiltModule;
+import io.bootique.ModuleCrate;
 import io.bootique.config.ConfigurationFactory;
 import io.bootique.di.BQModule;
 import io.bootique.di.Binder;
@@ -48,8 +48,8 @@ public class JCacheModule implements BQModule, BQModuleProvider {
     }
 
     @Override
-    public BuiltModule buildModule() {
-        return BuiltModule.of(this)
+    public ModuleCrate moduleCrate() {
+        return ModuleCrate.of(this)
                 .description("Integrates configuration for the JCache subsystem. Module itself does not include a JCache " +
                         "provider. Users will need to add a provider of their choice to the application classpath.")
                 .config(CONFIG_PREFIX, JCacheFactory.class)
