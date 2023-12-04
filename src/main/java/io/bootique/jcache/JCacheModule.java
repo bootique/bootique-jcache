@@ -19,10 +19,9 @@
 
 package io.bootique.jcache;
 
-import io.bootique.BQModuleProvider;
+import io.bootique.BQModule;
 import io.bootique.ModuleCrate;
 import io.bootique.config.ConfigurationFactory;
-import io.bootique.di.BQModule;
 import io.bootique.di.Binder;
 import io.bootique.di.Provides;
 import io.bootique.shutdown.ShutdownManager;
@@ -32,7 +31,7 @@ import javax.cache.configuration.Configuration;
 import javax.inject.Singleton;
 import java.util.Map;
 
-public class JCacheModule implements BQModule, BQModuleProvider {
+public class JCacheModule implements BQModule {
 
     private static final String CONFIG_PREFIX = "jcache";
 
@@ -48,7 +47,7 @@ public class JCacheModule implements BQModule, BQModuleProvider {
     }
 
     @Override
-    public ModuleCrate moduleCrate() {
+    public ModuleCrate crate() {
         return ModuleCrate.of(this)
                 .description("Integrates configuration for the JCache subsystem. Module itself does not include a JCache " +
                         "provider. Users will need to add a provider of their choice to the application classpath.")

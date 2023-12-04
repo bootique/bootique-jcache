@@ -19,13 +19,13 @@
 
 package io.bootique.jcache;
 
-import io.bootique.junit5.BQModuleProviderChecker;
+import io.bootique.junit5.BQModuleTester;
 import org.junit.jupiter.api.Test;
 
 public class JCacheModuleTest {
 
     @Test
-    public void autoLoading() {
-        BQModuleProviderChecker.testAutoLoadable(JCacheModule.class);
+    public void check() {
+        BQModuleTester.of(JCacheModule.class).testAutoLoadable().testConfig();
     }
 }
