@@ -64,10 +64,10 @@ public class JCacheFactory {
                     "You must place a JCache 1.0 provider on classpath explicitly.", e);
         }
 
-        shutdownManager.addShutdownHook(provider);
+        shutdownManager.onShutdown(provider);
 
         CacheManager manager = getConfigUri().map(u -> provider.getCacheManager(u, null)).orElse(provider.getCacheManager());
-        shutdownManager.addShutdownHook(manager);
+        shutdownManager.onShutdown(manager);
 
         // now load contributed configs
         configs.forEach(manager::createCache);
