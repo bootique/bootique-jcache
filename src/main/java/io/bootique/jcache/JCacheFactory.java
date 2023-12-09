@@ -29,9 +29,9 @@ import javax.cache.CacheManager;
 import javax.cache.Caching;
 import javax.cache.configuration.Configuration;
 import javax.cache.spi.CachingProvider;
+import javax.inject.Inject;
 import java.net.URI;
 import java.net.URISyntaxException;
-import java.util.Collections;
 import java.util.List;
 import java.util.Map;
 import java.util.Objects;
@@ -40,10 +40,15 @@ import java.util.Optional;
 @BQConfig("A collection of configuration files in the format understood by the provider.")
 public class JCacheFactory {
 
+    private final ShutdownManager shutdownManager;
+    private final Map<String, Configuration<?, ?>> cacheConfigurations;
+
     private List<ResourceFactory> configs;
 
-    public JCacheFactory() {
-        this.configs = Collections.emptyList();
+    @Inject
+    public JCacheFactory(ShutdownManager shutdownManager, Map<String, Configuration<?, ?>> cacheConfigurations) {
+        this.shutdownManager = shutdownManager;
+        this.cacheConfigurations = cacheConfigurations;
     }
 
     @BQConfigProperty("A list of resource URLs pointing to cache configuration files in the format understood by the" +
@@ -52,7 +57,7 @@ public class JCacheFactory {
         this.configs = Objects.requireNonNull(configs);
     }
 
-    public CacheManager createManager(Map<String, Configuration<?, ?>> configs, ShutdownManager shutdownManager) {
+    public CacheManager create() {
 
         CachingProvider provider;
         try {
@@ -63,19 +68,22 @@ public class JCacheFactory {
             throw new RuntimeException("'bootique-jcache' doesn't bundle any JCache providers. " +
                     "You must place a JCache 1.0 provider on classpath explicitly.", e);
         }
-
         shutdownManager.onShutdown(provider);
 
         CacheManager manager = getConfigUri().map(u -> provider.getCacheManager(u, null)).orElse(provider.getCacheManager());
         shutdownManager.onShutdown(manager);
 
         // now load contributed configs
-        configs.forEach(manager::createCache);
+        cacheConfigurations.forEach(manager::createCache);
 
         return manager;
     }
 
     private Optional<URI> getConfigUri() {
+
+        if (configs == null) {
+            return Optional.empty();
+        }
 
         switch (configs.size()) {
             case 0:

@@ -24,12 +24,9 @@ import io.bootique.ModuleCrate;
 import io.bootique.config.ConfigurationFactory;
 import io.bootique.di.Binder;
 import io.bootique.di.Provides;
-import io.bootique.shutdown.ShutdownManager;
 
 import javax.cache.CacheManager;
-import javax.cache.configuration.Configuration;
 import javax.inject.Singleton;
-import java.util.Map;
 
 public class JCacheModule implements BQModule {
 
@@ -62,11 +59,7 @@ public class JCacheModule implements BQModule {
 
     @Singleton
     @Provides
-    CacheManager provideCacheManager(
-            ConfigurationFactory configFactory,
-            ShutdownManager shutdownManager,
-            Map<String, Configuration<?, ?>> configs) {
-
-        return configFactory.config(JCacheFactory.class, CONFIG_PREFIX).createManager(configs, shutdownManager);
+    CacheManager provideCacheManager(ConfigurationFactory configFactory) {
+        return configFactory.config(JCacheFactory.class, CONFIG_PREFIX).create();
     }
 }
