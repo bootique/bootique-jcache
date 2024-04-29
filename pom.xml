@@ -39,6 +39,8 @@
         <bootique.version>${project.version}</bootique.version>
         <ehcache.version>3.10.8</ehcache.version>
         <jcache.version>1.1.0</jcache.version>
+        <!-- TODO: also used in Jersey Jakarta. Move to modules parent? -->
+        <glassfish.jaxb3.version>4.0.5</glassfish.jaxb3.version>
     </properties>
 
     <scm>
@@ -58,7 +60,7 @@
             <dependency>
                 <groupId>org.glassfish.jaxb</groupId>
                 <artifactId>jaxb-runtime</artifactId>
-                <version>4.0.3</version>
+                <version>${glassfish.jaxb3.version}</version>
             </dependency>
             <dependency>
                 <groupId>javax.cache</groupId>
