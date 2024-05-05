@@ -58,10 +58,5 @@ Integration of JCache caching API with Bootique. Provides injectable CacheManage
 ## Example Project
 
 `bootique-jcache` **does not** bundle a JCache provider. You will need to explicitly include a provider of your choice 
-on the classpath of your application, such as EhCache, Caffeine, Hazelcast, etc.
-
-See usage examples:
-* [bootique-ehcache-demo](https://github.com/bootique-examples/bootique-jcache-demo/tree/master/bootique-ehcache-demo) -
-an example of [Ehcache](http://www.ehcache.org) usage in [Bootique](http://bootique.io) app. 
-* [bootique-hazelcast-demo](https://github.com/bootique-examples/bootique-jcache-demo/tree/master/bootique-hazelcast-demo) - 
-an example of [Hazelcast JCache](http://docs.hazelcast.org/docs/3.4/manual/html/jcache.html) usage in [Bootique](http://bootique.io) app.
+on the classpath of your application, such as EhCache, Caffeine, Hazelcast, etc. You can find the details of different 
+provider integrations in the [examples](https://github.com/bootique-examples/bootique-jcache-examples).
