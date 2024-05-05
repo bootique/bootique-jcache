@@ -1,3 +1,7 @@
+## 3.0-M5
+
+* #13 Upgrade to JCache 1.1.1
+
 ## 1.0.RC1
 
 * #10 Cleaning up APIs deprecated since <= 0.25
