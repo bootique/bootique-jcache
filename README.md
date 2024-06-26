@@ -28,11 +28,6 @@ Integration of JCache caching API with Bootique. Provides injectable CacheManage
 *For additional help/questions about this example send a message to
 [Bootique forum](https://groups.google.com/forum/#!forum/bootique-user).*
    
-## Prerequisites
-      
-    * Java 1.8 or newer.
-    * Apache Maven.
-      
 # Setup
 
 ## Add bootique-jcache to your build tool
