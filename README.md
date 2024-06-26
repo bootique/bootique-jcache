@@ -22,6 +22,7 @@
 
 # bootique-jcache
 
+
 Integration of JCache caching API with Bootique. Provides injectable CacheManager. 
 
 *For additional help/questions about this example send a message to
