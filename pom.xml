@@ -36,7 +36,6 @@
     <description>Provides JCache integration with Bootique</description>
 
     <properties>
-        <bootique.version>${project.version}</bootique.version>
         <ehcache.version>3.10.8</ehcache.version>
         <jcache.version>1.1.1</jcache.version>
         <!-- TODO: also used in Jersey Jakarta. Move to modules parent? -->
@@ -70,12 +69,12 @@
             <dependency>
                 <groupId>io.bootique</groupId>
                 <artifactId>bootique</artifactId>
-                <version>${bootique.version}</version>
+                <version>${project.version}</version>
             </dependency>
             <dependency>
                 <groupId>io.bootique</groupId>
                 <artifactId>bootique-junit5</artifactId>
-                <version>${bootique.version}</version>
+                <version>${project.version}</version>
             </dependency>
             <dependency>
                 <groupId>org.mockito</groupId>
