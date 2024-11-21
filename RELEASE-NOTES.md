@@ -1,4 +1,4 @@
-## 3.0-M5
+## 3.0-M6
 
 * #13 Upgrade to JCache 1.1.1
 
