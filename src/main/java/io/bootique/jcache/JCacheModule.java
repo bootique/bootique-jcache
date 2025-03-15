@@ -26,7 +26,7 @@ import io.bootique.di.Binder;
 import io.bootique.di.Provides;
 
 import javax.cache.CacheManager;
-import javax.inject.Singleton;
+import jakarta.inject.Singleton;
 
 public class JCacheModule implements BQModule {
 

@@ -29,7 +29,7 @@ import javax.cache.CacheManager;
 import javax.cache.Caching;
 import javax.cache.configuration.Configuration;
 import javax.cache.spi.CachingProvider;
-import javax.inject.Inject;
+import jakarta.inject.Inject;
 import java.net.URI;
 import java.net.URISyntaxException;
 import java.util.List;
