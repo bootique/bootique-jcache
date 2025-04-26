@@ -23,13 +23,13 @@ import io.bootique.annotation.BQConfig;
 import io.bootique.annotation.BQConfigProperty;
 import io.bootique.resource.ResourceFactory;
 import io.bootique.shutdown.ShutdownManager;
+import jakarta.inject.Inject;
 
 import javax.cache.CacheException;
 import javax.cache.CacheManager;
 import javax.cache.Caching;
 import javax.cache.configuration.Configuration;
 import javax.cache.spi.CachingProvider;
-import jakarta.inject.Inject;
 import java.net.URI;
 import java.net.URISyntaxException;
 import java.util.List;
@@ -85,18 +85,18 @@ public class JCacheFactory {
             return Optional.empty();
         }
 
-        switch (configs.size()) {
-            case 0:
-                return Optional.empty();
-            case 1:
+        return switch (configs.size()) {
+            case 0 -> Optional.empty();
+            case 1 -> {
                 try {
-                    return Optional.of(configs.get(0).getUrl().toURI());
+                    yield Optional.of(configs.get(0).getUrl().toURI());
                 } catch (URISyntaxException e) {
                     throw new IllegalStateException("Error converting config to URI: " + configs.get(0));
                 }
-            default:
-                // TODO: how do we merge multiple configs?
-                throw new IllegalStateException("More than one JCache configuration specified. Currently unsupported: " + configs);
-        }
+            }
+            // TODO: how do we merge multiple configs?
+            default ->
+                    throw new IllegalStateException("More than one JCache configuration specified. Currently unsupported: " + configs);
+        };
     }
 }
