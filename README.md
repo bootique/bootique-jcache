@@ -22,8 +22,7 @@
 
 # bootique-jcache
 
-
-Integration of JCache caching API with Bootique. Provides injectable CacheManager. 
+Integration of JCache caching API with Bootique. Provides an injectable CacheManager. 
 
 *For additional help/questions about this example send a message to
 [Bootique forum](https://groups.google.com/forum/#!forum/bootique-user).*
@@ -56,3 +55,11 @@ Integration of JCache caching API with Bootique. Provides injectable CacheManage
 `bootique-jcache` **does not** bundle a JCache provider. You will need to explicitly include a provider of your choice 
 on the classpath of your application, such as EhCache, Caffeine, Hazelcast, etc. You can find the details of different 
 provider integrations in the [examples](https://github.com/bootique-examples/bootique-jcache-examples).
+
+Providers are chosen either implicitly by locating the provider class in `META-INF/services/javax.cache.spi.CachingProvider`
+in the application dependencies (similar mechanism is used to locate Bootique's own modules), or taken from configuration:
+
+```yaml
+jcache:
+   provider: org.ehcache.jsr107.EhcacheCachingProvider
+```
