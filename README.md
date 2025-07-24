@@ -57,7 +57,7 @@ on the classpath of your application, such as EhCache, Caffeine, Hazelcast, etc.
 provider integrations in the [examples](https://github.com/bootique-examples/bootique-jcache-examples).
 
 Providers are chosen either implicitly by locating the provider class in `META-INF/services/javax.cache.spi.CachingProvider`
-in the application dependencies (similar mechanism is used to locate Bootique's own modules), or taken from configuration:
+in the application dependencies (a similar mechanism is used to locate Bootique's own modules), or taken from configuration:
 
 ```yaml
 jcache:

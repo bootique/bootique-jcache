@@ -1,3 +1,7 @@
+## 4.0-RC1
+
+* #15 Proper CacheManager scoping
+
 ## 3.0-M6
 
 * #13 Upgrade to JCache 1.1.1
