@@ -24,18 +24,15 @@ import io.bootique.Bootique;
 import io.bootique.junit5.BQApp;
 import io.bootique.junit5.BQTest;
 import org.junit.jupiter.api.Test;
-import org.mockito.Mockito;
-import org.mockito.stubbing.Answer;
 
 import javax.cache.Cache;
 import javax.cache.CacheManager;
 import javax.cache.processor.EntryProcessor;
+import javax.cache.processor.EntryProcessorException;
 import javax.cache.processor.MutableEntry;
 import java.util.concurrent.atomic.AtomicInteger;
 
 import static org.junit.jupiter.api.Assertions.*;
-import static org.mockito.ArgumentMatchers.any;
-import static org.mockito.Mockito.*;
 
 @BQTest
 public class JCacheModule_XMLConfigIT {
@@ -85,26 +82,28 @@ public class JCacheModule_XMLConfigIT {
         assertNotNull(cache);
 
         assertNull(cache.get("one"));
+
+        TestProcessor processor = new TestProcessor();
+
+        assertEquals(Integer.valueOf(1), cache.invoke("one", processor));
+        assertEquals(Integer.valueOf(1), cache.invoke("one", processor));
+        assertEquals(Integer.valueOf(2), cache.invoke("two", processor));
+        assertEquals(Integer.valueOf(2), cache.invoke("two", processor));
+
+        assertEquals(2, processor.counter.get());
+    }
+
+    static class TestProcessor implements EntryProcessor<String, Integer, Integer> {
         AtomicInteger counter = new AtomicInteger();
 
-        EntryProcessor<String, Integer, Integer> mockEntryMaker = Mockito.mock(EntryProcessor.class);
-        when(mockEntryMaker.process(any(MutableEntry.class))).thenAnswer((Answer<Integer>) invocation -> {
-
-            MutableEntry<String, Integer> e = (MutableEntry<String, Integer>) invocation.getArguments()[0];
+        @Override
+        public Integer process(MutableEntry<String, Integer> e, Object... arguments) throws EntryProcessorException {
             if (!e.exists()) {
                 e.setValue(counter.incrementAndGet());
             }
 
             return e.getValue();
-        });
-
-        assertEquals(Integer.valueOf(1), cache.invoke("one", mockEntryMaker));
-        assertEquals(Integer.valueOf(1), cache.invoke("one", mockEntryMaker));
-        assertEquals(Integer.valueOf(2), cache.invoke("two", mockEntryMaker));
-        assertEquals(Integer.valueOf(2), cache.invoke("two", mockEntryMaker));
-
-        verify(mockEntryMaker, times(4));
+        }
     }
-
 
 }
