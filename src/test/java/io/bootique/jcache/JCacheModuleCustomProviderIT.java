@@ -20,8 +20,8 @@ package io.bootique.jcache;
 
 import io.bootique.BQRuntime;
 import io.bootique.Bootique;
-import io.bootique.junit5.BQApp;
-import io.bootique.junit5.BQTest;
+import io.bootique.junit.BQApp;
+import io.bootique.junit.BQTest;
 import org.junit.jupiter.api.Test;
 
 import javax.cache.CacheManager;
